@@ -1,0 +1,34 @@
+mgl-map {
+  width: 100%;
+  height: 100%;
+}
+fieldset {
+  margin-bottom: 8px;
+  border: 1px solid #dadada;
+}
+fieldset span {
+  color: silver;
+}
+.coords {
+  color: darkgreen;
+}
+table {
+  width: 100%;
+}
+.total {
+  display: inline-block;
+  margin-left: 8px;
+}
+th {
+  text-align: left;
+  background-color: #dadada;
+  color: white;
+  font-weight: normal;
+}
+table a {
+  text-decoration: none;
+  color: black;
+}
+tr:nth-child(even) {
+  background-color: #f0f0f0;
+}

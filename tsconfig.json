@@ -1,0 +1,47 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "paths": {
+      "@myrmidon/atlas-place-picker": [
+        "dist/myrmidon/atlas-place-picker/myrmidon-atlas-place-picker",
+        "dist/myrmidon/atlas-place-picker"
+      ],
+      "@myrmidon/matx-multi-flags": [
+        "dist/myrmidon/matx-multi-flags/myrmidon-matx-multi-flags",
+        "dist/myrmidon/matx-multi-flags"
+      ],
+      "@myrmidon/ng-environment": [
+        "dist/myrmidon/ng-environment/myrmidon-ng-environment",
+        "dist/myrmidon/ng-environment"
+      ]
+    },
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitReturns": true,
+    /* https://www.detroitlabs.com/blog/2018/02/28/adding-custom-type-definitions-to-a-third-party-library/ */
+    "noImplicitAny": false,
+    "noFallthroughCasesInSwitch": true,
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2017",
+    "module": "es2020",
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "allowSyntheticDefaultImports": true
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}

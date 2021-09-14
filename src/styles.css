@@ -1,0 +1,12 @@
+/* @import "~@angular/material/prebuilt-themes/indigo-pink.css"; */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+article {
+  margin: 0 16px;
+}
+footer {
+  text-align: center;
+  font-size: 95%;
+  color: #b0b0b0;
+}

@@ -1,0 +1,345 @@
+<div
+  gdRows="auto 1fr"
+  gdColumns="1fr 2fr"
+  gdAreas="filters map | result result"
+  gdGap="8px"
+  gdRows.lt-md="1fr"
+  gdColumns.lt-md="1fr"
+  gdAreas.lt-md="filters | map | result"
+>
+  <form [formGroup]="form" (submit)="search()" gdArea="filters">
+    <div>
+      <!-- text -->
+      <mat-form-field>
+        <input matInput [formControl]="text" placeholder="text" />
+        <mat-error
+          *ngIf="text.errors?.maxLength && (text.dirty || text.touched)"
+          >text too long</mat-error
+        >
+      </mat-form-field>
+
+      <!-- match all -->
+      &nbsp;
+      <mat-checkbox [formControl]="matchAny">match any</mat-checkbox>
+    </div>
+
+    <!-- type -->
+    <div>
+      <mat-form-field *ngIf="types?.length" style="width: 280px">
+        <mat-select [formControl]="type" placeholder="type">
+          <mat-option [value]="null">(any)</mat-option>
+          <mat-option *ngFor="let t of types" [value]="t.shortName">{{
+            t.shortName
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- scope -->
+    <fieldset>
+      <legend>scopes</legend>
+      <matx-multi-flags
+        [selectedIds]="scopes?.value"
+        [flags]="availScopes"
+        [toolbar]="true"
+        (selectionChange)="onScopeChange($event)"
+      ></matx-multi-flags>
+    </fieldset>
+
+    <!-- year -->
+    <div>
+      <mat-form-field style="width: 4em">
+        <input
+          matInput
+          type="number"
+          min="-20000"
+          [max]="currentYear"
+          [formControl]="yearMin"
+          placeholder="yr.min."
+        />
+      </mat-form-field>
+      &nbsp;-&nbsp;
+      <mat-form-field style="width: 4em">
+        <input
+          matInput
+          type="number"
+          min="-20000"
+          [max]="currentYear"
+          [formControl]="yearMax"
+          placeholder="yr.max."
+        />
+      </mat-form-field>
+
+      <!-- rank -->
+      rank
+      <mat-slider
+        min="0"
+        max="100"
+        step="10"
+        value="0"
+        [formControl]="rank"
+      ></mat-slider>
+      &nbsp;
+      <span *ngIf="rank?.value">{{ rank.value }}</span>
+      <span *ngIf="!rank?.value" style="color: silver">any</span>
+    </div>
+
+    <!-- point -->
+    <fieldset>
+      <legend>
+        <mat-checkbox [formControl]="hasPoint">distance</mat-checkbox>
+        &nbsp;
+        <button
+          type="button"
+          mat-icon-button
+          color="warn"
+          matTooltip="Remove distance point from map"
+          [disabled]="!marker"
+          (click)="removeDistanceMarker()"
+        >
+          <mat-icon>remove_circle</mat-icon>
+        </button>
+      </legend>
+      <!-- pt coords -->
+      <div>
+        <mat-form-field style="width: 8em">
+          <input
+            matInput
+            type="number"
+            min="-180"
+            max="180"
+            [formControl]="distLng"
+            placeholder="lng"
+          />
+        </mat-form-field>
+        &nbsp;
+        <mat-form-field style="width: 8em">
+          <input
+            matInput
+            type="number"
+            min="-90"
+            max="90"
+            [formControl]="distLat"
+            placeholder="lat"
+          />
+        </mat-form-field>
+        &nbsp;
+        <button
+          type="button"
+          mat-icon-button
+          color="primary"
+          matTooltip="Show on map"
+          (click)="addDistanceMarkerFromPt()"
+        >
+          <mat-icon>add_circle</mat-icon>
+        </button>
+      </div>
+      <!-- distance -->
+      <div>
+        <mat-form-field style="width: 5em">
+          <input
+            matInput
+            type="number"
+            min="0"
+            [formControl]="distMin"
+            placeholder="min."
+          />
+        </mat-form-field>
+        &nbsp;-&nbsp;
+        <mat-form-field style="width: 5em">
+          <input
+            matInput
+            type="number"
+            min="0"
+            [formControl]="distMax"
+            placeholder="max"
+          />
+        </mat-form-field>
+        &nbsp;
+        <span>mt.</span>
+      </div>
+    </fieldset>
+
+    <!-- bounding box -->
+    <fieldset>
+      <legend>
+        <mat-checkbox [formControl]="hasBox">area</mat-checkbox>
+        &nbsp;
+        <button
+          type="button"
+          mat-icon-button
+          color="warn"
+          matTooltip="Remove area box from map"
+          [disabled]="!boxId"
+          (click)="removeBox()"
+        >
+          <mat-icon>remove_circle</mat-icon>
+        </button>
+        &nbsp;
+        <mat-slide-toggle [formControl]="boxContained">
+          <span *ngIf="boxContained?.value">contained</span>
+          <span *ngIf="!boxContained?.value">intersected</span>
+        </mat-slide-toggle>
+        &nbsp;
+      </legend>
+      <div>
+        <span>SW</span>&nbsp;
+        <mat-form-field style="width: 8em">
+          <input
+            matInput
+            type="number"
+            min="-180"
+            max="180"
+            [formControl]="boxSwLng"
+            placeholder="lng"
+          />
+        </mat-form-field>
+        &nbsp;
+        <mat-form-field style="width: 8em">
+          <input
+            matInput
+            type="number"
+            min="-90"
+            max="90"
+            [formControl]="boxSwLat"
+            placeholder="lat"
+          />
+        </mat-form-field>
+      </div>
+      <div>
+        <span>NE</span>&nbsp;
+        <mat-form-field style="width: 8em">
+          <input
+            matInput
+            type="number"
+            min="-180"
+            max="180"
+            [formControl]="boxNeLng"
+            placeholder="lng"
+          />
+        </mat-form-field>
+        &nbsp;
+        <mat-form-field style="width: 8em">
+          <input
+            matInput
+            type="number"
+            min="-90"
+            max="90"
+            [formControl]="boxNeLat"
+            placeholder="lat"
+          />
+        </mat-form-field>
+      </div>
+    </fieldset>
+
+    <!-- search button -->
+    <div style="margin-top: 8px" fxLayout="row" fxLayoutAlign="start center">
+      <button
+        type="submit"
+        mat-flat-button
+        color="primary"
+        [disabled]="searching"
+      >
+        <mat-icon>search</mat-icon>
+        search
+      </button>
+      <span *ngIf="page" class="total">{{ page.total }}</span>
+      <span fxFlex></span>
+      <mat-form-field style="width: 5em">
+        <mat-select [formControl]="drawing" placeholder="drawing">
+          <mat-option [value]="0">normal</mat-option>
+          <mat-option [value]="1">point</mat-option>
+          <mat-option [value]="2">box</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-progress-bar
+        style="width: 100%"
+        mode="indeterminate"
+        *ngIf="searching"
+      ></mat-progress-bar>
+    </div>
+  </form>
+
+  <!-- map -->
+  <div gdArea="map" style="min-height: 300px; border: 1px solid #dadada">
+    <mgl-map
+      [style]="'mapbox://styles/mapbox/streets-v11'"
+      [zoom]="[4]"
+      [center]="[23.7275, 37.9838]"
+      (mapLoad)="onMapLoad($event)"
+      (mapClick)="onMapClick($event)"
+    >
+      <mgl-marker
+        id="result-pin-layer"
+        *ngFor="let feature of resultSource?.features"
+        [feature]="feature"
+      ></mgl-marker>
+      <mgl-layer
+        id="result-label-layer"
+        *ngIf="rawResultSource"
+        type="symbol"
+        [source]="rawResultSource"
+        [layout]="labelLayout"
+      ></mgl-layer>
+    </mgl-map>
+  </div>
+
+  <!-- result -->
+  <div gdArea="result">
+    <table *ngIf="page">
+      <thead>
+        <tr>
+          <th></th>
+          <th fxHide.lt-md>id</th>
+          <th>title</th>
+          <th>type</th>
+          <th fxHide.lt-md>lon</th>
+          <th fxHide.lt-md>lat</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of page.items; let i = index">
+          <td>
+            <button
+              *ngIf="!i || page.items[i - 1].id !== item.id"
+              type="button"
+              mat-icon-button
+              matTooltip="Pick this place"
+            >
+              <mat-icon>add_circle</mat-icon>
+            </button>
+          </td>
+          <td fxHide.lt-md>{{ item.id }}</td>
+          <td>
+            <a
+              [href]="'https://pleiades.stoa.org/places/' + item.id"
+              target="_blank"
+              >{{ item.title }}</a
+            >
+          </td>
+          <td>
+            <a *ngIf="item.typeUri" [href]="item.typeUri" target="_blank">{{
+              item.typeLabel
+            }}</a>
+          </td>
+          <td fxHide.lt-md>{{ item.point?.lng }}</td>
+          <td fxHide.lt-md>{{ item.point?.lat }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <mat-paginator
+      *ngIf="page"
+      gdArea="pagination"
+      gdAlignColumns="center"
+      gdAlignRows="start"
+      [length]="page?.total"
+      [pageSize]="limit?.value"
+      [pageSizeOptions]="[20, 50, 75, 100]"
+      [pageIndex]="currentPage ? currentPage - 1 : 0"
+      [showFirstLastButtons]="true"
+      (page)="onPageChange($event)"
+    ></mat-paginator>
+  </div>
+</div>
