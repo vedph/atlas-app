@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -30,14 +30,21 @@ import DrawRectangle, {
   DrawStyles,
 } from 'mapbox-gl-draw-rectangle-restrict-area';
 
-interface PlaceViewModel {
+/**
+ * A place picked in the PlacePickerComponent.
+ */
+export interface PickedPlace {
   id: string;
   title: string;
   typeUri: string;
   typeLabel: string;
   point?: LngLat;
+  payload?: any;
 }
 
+/**
+ * Place picker component.
+ */
 @Component({
   selector: 'atlas-place-picker',
   templateUrl: './place-picker.component.html',
@@ -78,7 +85,7 @@ export class PlacePickerComponent implements OnInit {
 
   public searching?: boolean;
   public currentPage: number;
-  public page?: DataPage<PlaceViewModel>;
+  public page?: DataPage<PickedPlace>;
   public resultSource?: GeoJSON.FeatureCollection<GeoJSON.Point>;
   public rawResultSource?: GeoJSONSourceRaw;
   public labelLayout?: AnyLayout;
@@ -86,7 +93,21 @@ export class PlacePickerComponent implements OnInit {
   public marker?: Marker;
   public boxId?: string;
 
+  /**
+   * Emitted when user picks a place.
+   */
+  @Output()
+  public placePick: EventEmitter<PickedPlace>;
+
+  /**
+   * Emitted when user requests to close the picker.
+   */
+  @Output()
+  public pickerClose: EventEmitter<any>;
+
   constructor(formBuilder: FormBuilder, private _apiService: AtlasApiService) {
+    this.placePick = new EventEmitter<PickedPlace>();
+    this.pickerClose = new EventEmitter<any>();
     this.currentYear = new Date().getFullYear();
     this.currentPage = 0;
     this.limits = [10, 20, 50, 75, 100];
@@ -256,7 +277,10 @@ export class PlacePickerComponent implements OnInit {
                 typeUri: r.type,
                 typeLabel: this.getShortType(r.type),
                 point:
-                  r.rp_lon && r.rp_lat ? new LngLat(r.rp_lon, r.rp_lat) : undefined,
+                  r.rp_lon && r.rp_lat
+                    ? new LngLat(r.rp_lon, r.rp_lat)
+                    : undefined,
+                payload: r,
               };
             }),
           };
@@ -395,9 +419,10 @@ export class PlacePickerComponent implements OnInit {
       // a rectangle was drawn
       console.log(feature);
       this.boxId = feature.features[0].id;
-      const rectPoints: LngLat[] = feature.features[0].geometry.coordinates[0].map(
-        (a: number[]) => new LngLat(a[0], a[1])
-      );
+      const rectPoints: LngLat[] =
+        feature.features[0].geometry.coordinates[0].map(
+          (a: number[]) => new LngLat(a[0], a[1])
+        );
       const bounds = this.getRectBounds(rectPoints);
       if (bounds) {
         const sw = bounds.getSouthWest();
@@ -473,4 +498,12 @@ export class PlacePickerComponent implements OnInit {
     }
   }
   //#endregion
+
+  public onPlacePick(event: PickedPlace): void {
+    this.placePick.emit(event);
+  }
+
+  public onPickerClose(): void {
+    this.pickerClose.emit();
+  }
 }

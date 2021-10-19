@@ -1,6 +1,19 @@
 {
   "name": "@myrmidon/atlas-place-picker",
   "version": "0.0.1",
+  "description": "Cadmus - place picker.",
+  "keywords": [
+    "Cadmus",
+    "GIS"
+  ],
+  "homepage": "https://github.com/vedph/atlas-app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vedph/atlas-app"
+  },
+  "author": {
+    "name": "Daniele Fusi"
+  },
   "peerDependencies": {
     "@angular/common": "^12.0.3",
     "@angular/core": "^12.0.3"

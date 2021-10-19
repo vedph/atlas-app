@@ -21,6 +21,11 @@
       <!-- match all -->
       &nbsp;
       <mat-checkbox [formControl]="matchAny">match any</mat-checkbox>
+      &nbsp;
+      <button type="button" mat-flat-button matTooltip="Close this picker" (click)="onPickerClose()">
+        <mat-icon>cancel</mat-icon>
+        close
+      </button>
     </div>
 
     <!-- type -->
@@ -307,6 +312,7 @@
               type="button"
               mat-icon-button
               matTooltip="Pick this place"
+              (click)="onPlacePick(item)"
             >
               <mat-icon>add_circle</mat-icon>
             </button>
