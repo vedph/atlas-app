@@ -1,9 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EnvService } from '@myrmidon/ng-environment';
 import { Observable } from 'rxjs';
-import { ErrorService } from './error.service';
 import { retry, catchError } from 'rxjs/operators';
+
+import { EnvService, ErrorService } from '@myrmidon/ng-tools';
 
 /**
  * A page of data.

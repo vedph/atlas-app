@@ -6,7 +6,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
-import { MatxFlag } from '@myrmidon/matx-multi-flags';
 import {
   AnyLayout,
   GeoJSONSourceRaw,
@@ -29,6 +28,7 @@ import MapboxDraw, { DrawModes } from '@mapbox/mapbox-gl-draw';
 import DrawRectangle, {
   DrawStyles,
 } from 'mapbox-gl-draw-rectangle-restrict-area';
+import { Flag } from '@myrmidon/cadmus-ui-flags-picker';
 
 /**
  * A place picked in the PlacePickerComponent.
@@ -80,7 +80,7 @@ export class PlacePickerComponent implements OnInit {
 
   public currentYear: number;
   public types?: Lookup[];
-  public availScopes: MatxFlag[];
+  public availScopes: Flag[];
   public limits: number[];
 
   public searching?: boolean;

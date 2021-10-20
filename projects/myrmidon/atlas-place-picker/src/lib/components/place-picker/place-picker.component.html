@@ -22,7 +22,12 @@
       &nbsp;
       <mat-checkbox [formControl]="matchAny">match any</mat-checkbox>
       &nbsp;
-      <button type="button" mat-flat-button matTooltip="Close this picker" (click)="onPickerClose()">
+      <button
+        type="button"
+        mat-flat-button
+        matTooltip="Close this picker"
+        (click)="onPickerClose()"
+      >
         <mat-icon>cancel</mat-icon>
         close
       </button>
@@ -43,12 +48,12 @@
     <!-- scope -->
     <fieldset>
       <legend>scopes</legend>
-      <matx-multi-flags
+      <cadmus-ui-flags-picker
         [selectedIds]="scopes?.value"
         [flags]="availScopes"
         [toolbar]="true"
         (selectionChange)="onScopeChange($event)"
-      ></matx-multi-flags>
+      ></cadmus-ui-flags-picker>
     </fieldset>
 
     <!-- year -->

@@ -8,9 +8,9 @@
       "mapbox-gl": "mapbox-gl",
       "@mapbox/mapbox-gl-draw": "@mapbox/mapbox-gl-draw",
       "mapbox-gl-draw-rectangle-restrict-area": "mapbox-gl-draw-rectangle-restrict-area",
-      "@myrmidon/ng-environment": "@myrmidon/ng-environment",
-      "@myrmidon/matx-multi-flags": "@myrmidon/matx-multi-flags",
-      "@myrmidon/cadmus-material": "@myrmidon/cadmus-material"
+      "@myrmidon/cadmus-material": "@myrmidon/cadmus-material",
+      "@myrmidon/ng-tools": "@myrmidon/ng-tools",
+      "@myrmidon/cadmus-ui-flags-picker": "@myrmidon/cadmus-ui-flags-picker"
     }
   }
 }

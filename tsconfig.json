@@ -6,14 +6,6 @@
       "@myrmidon/atlas-place-picker": [
         "dist/myrmidon/atlas-place-picker/myrmidon-atlas-place-picker",
         "dist/myrmidon/atlas-place-picker"
-      ],
-      "@myrmidon/matx-multi-flags": [
-        "dist/myrmidon/matx-multi-flags/myrmidon-matx-multi-flags",
-        "dist/myrmidon/matx-multi-flags"
-      ],
-      "@myrmidon/ng-environment": [
-        "dist/myrmidon/ng-environment/myrmidon-ng-environment",
-        "dist/myrmidon/ng-environment"
       ]
     },
     "baseUrl": "./",

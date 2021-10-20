@@ -10,13 +10,10 @@ import {
 } from 'ngx-mapbox-gl';
 
 import { CadmusMaterialModule } from '@myrmidon/cadmus-material';
-import { MatxMultiFlagsModule } from '@myrmidon/matx-multi-flags';
-import {
-  EnvServiceProvider,
-  NgEnvironmentModule,
-} from '@myrmidon/ng-environment';
+import { EnvServiceProvider, NgToolsModule } from '@myrmidon/ng-tools';
 
 import { PlacePickerComponent } from './components/place-picker/place-picker.component';
+import { CadmusUiFlagsPickerModule } from '@myrmidon/cadmus-ui-flags-picker';
 
 export interface IAtlasPlacePickerModuleConfig {
   mapboxToken: string;
@@ -30,9 +27,9 @@ export interface IAtlasPlacePickerModuleConfig {
     ReactiveFormsModule,
     HttpClientModule,
     NgxMapboxGLModule,
+    NgToolsModule,
     CadmusMaterialModule,
-    NgEnvironmentModule,
-    MatxMultiFlagsModule,
+    CadmusUiFlagsPickerModule
   ],
   exports: [PlacePickerComponent],
   providers: [EnvServiceProvider],

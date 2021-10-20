@@ -39,7 +39,7 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "1mb",
+                  "maximumWarning": "2mb",
                   "maximumError": "3mb"
                 },
                 {
@@ -132,68 +132,6 @@
             "main": "projects/myrmidon/atlas-place-picker/src/test.ts",
             "tsConfig": "projects/myrmidon/atlas-place-picker/tsconfig.spec.json",
             "karmaConfig": "projects/myrmidon/atlas-place-picker/karma.conf.js"
-          }
-        }
-      }
-    },
-    "@myrmidon/ng-environment": {
-      "projectType": "library",
-      "root": "projects/myrmidon/ng-environment",
-      "sourceRoot": "projects/myrmidon/ng-environment/src",
-      "prefix": "env",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "projects/myrmidon/ng-environment/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/myrmidon/ng-environment/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/myrmidon/ng-environment/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/myrmidon/ng-environment/src/test.ts",
-            "tsConfig": "projects/myrmidon/ng-environment/tsconfig.spec.json",
-            "karmaConfig": "projects/myrmidon/ng-environment/karma.conf.js"
-          }
-        }
-      }
-    },
-    "@myrmidon/matx-multi-flags": {
-      "projectType": "library",
-      "root": "projects/myrmidon/matx-multi-flags",
-      "sourceRoot": "projects/myrmidon/matx-multi-flags/src",
-      "prefix": "matx",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "projects/myrmidon/matx-multi-flags/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/myrmidon/matx-multi-flags/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/myrmidon/matx-multi-flags/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/myrmidon/matx-multi-flags/src/test.ts",
-            "tsConfig": "projects/myrmidon/matx-multi-flags/tsconfig.spec.json",
-            "karmaConfig": "projects/myrmidon/matx-multi-flags/karma.conf.js"
           }
         }
       }
