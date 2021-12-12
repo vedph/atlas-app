@@ -51,6 +51,16 @@ export interface QuickSearchFilter extends SpatialFilter {
   scopes?: string;
 }
 
+export interface QuickSearchResult {
+  id: string;
+  uriPrefix: string;
+  name: string;
+  type?: string;
+  lat?: number;
+  lng?: number;
+  payload?: any;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -85,7 +95,9 @@ export class AtlasApiService {
       .pipe(retry(3), catchError(this._error.handleError));
   }
 
-  public quickSearch(filter: QuickSearchFilter): Observable<DataPage<any>> {
+  public quickSearch(
+    filter: QuickSearchFilter
+  ): Observable<DataPage<QuickSearchResult>> {
     const url = `${this._env.get('apiUrl')}qsearch`;
 
     let p = new HttpParams();
@@ -145,7 +157,7 @@ export class AtlasApiService {
     }
 
     return this._http
-      .get<DataPage<LookupEntry>>(url, {
+      .get<DataPage<QuickSearchResult>>(url, {
         params: p,
       })
       .pipe(retry(3), catchError(this._error.handleError));

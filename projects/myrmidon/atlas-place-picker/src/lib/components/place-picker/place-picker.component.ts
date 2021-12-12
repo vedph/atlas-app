@@ -21,9 +21,10 @@ import {
   AtlasApiService,
   LookupEntry,
   QuickSearchFilter,
+  QuickSearchResult,
 } from '../../services/atlas-api.service';
 // https://www.npmjs.com/package/mapbox-gl-draw-rectangle-restrict-area
-import MapboxDraw, { DrawModes } from '@mapbox/mapbox-gl-draw';
+import MapboxDraw from '@mapbox/mapbox-gl-draw';
 import DrawRectangle, {
   DrawStyles,
 } from 'mapbox-gl-draw-rectangle-restrict-area';
@@ -85,7 +86,7 @@ export class PlacePickerComponent implements OnInit {
 
   public searching?: boolean;
   public currentPage: number;
-  public page?: DataPage<PickedPlace>;
+  public page?: DataPage<QuickSearchResult>;
   public resultSource?: GeoJSON.FeatureCollection<GeoJSON.Point>;
   public rawResultSource?: GeoJSONSourceRaw;
   public labelLayout?: AnyLayout;
@@ -97,7 +98,7 @@ export class PlacePickerComponent implements OnInit {
    * Emitted when user picks a place.
    */
   @Output()
-  public placePick: EventEmitter<PickedPlace>;
+  public placePick: EventEmitter<QuickSearchResult>;
 
   /**
    * Emitted when user requests to close the picker.
@@ -106,7 +107,7 @@ export class PlacePickerComponent implements OnInit {
   public pickerClose: EventEmitter<any>;
 
   constructor(formBuilder: FormBuilder, private _apiService: AtlasApiService) {
-    this.placePick = new EventEmitter<PickedPlace>();
+    this.placePick = new EventEmitter<QuickSearchResult>();
     this.pickerClose = new EventEmitter<any>();
     this.currentYear = new Date().getFullYear();
     this.currentPage = 0;
@@ -221,7 +222,7 @@ export class PlacePickerComponent implements OnInit {
       return type;
     }
     const i = type.lastIndexOf('/');
-    return i > -1 ? type.substr(i + 1) : type;
+    return i > -1 ? type.substring(i + 1) : type;
   }
 
   private getFilter(noReset: boolean): QuickSearchFilter {
@@ -268,22 +269,23 @@ export class PlacePickerComponent implements OnInit {
         (page) => {
           this.searching = false;
           this.currentPage = page.pageNumber;
-          this.page = {
-            ...page,
-            items: page.items.map((r) => {
-              return {
-                id: r.id,
-                title: r.title,
-                typeUri: r.type,
-                typeLabel: this.getShortType(r.type),
-                point:
-                  r.rp_lon && r.rp_lat
-                    ? new LngLat(r.rp_lon, r.rp_lat)
-                    : undefined,
-                payload: r,
-              };
-            }),
-          };
+          this.page = page;
+          // this.page = {
+          //   ...page,
+          //   items: page.items.map((r) => {
+          //     return {
+          //       id: r.id,
+          //       title: r.title,
+          //       typeUri: r.type,
+          //       typeLabel: this.getShortType(r.type),
+          //       point:
+          //         r.rp_lon && r.rp_lat
+          //           ? new LngLat(r.rp_lon, r.rp_lat)
+          //           : undefined,
+          //       payload: r,
+          //     };
+          //   }),
+          // };
           this.setFeaturesFromPage();
         },
         (error) => {
@@ -364,17 +366,17 @@ export class PlacePickerComponent implements OnInit {
     const features: GeoJSON.Feature<GeoJSON.Point>[] = [];
     if (this.page) {
       this.page.items
-        .filter((vm) => vm.point)
-        .forEach((vm) => {
+        .filter((r) => r.lat)
+        .forEach((r) => {
           features.push({
             type: 'Feature',
             properties: {
-              id: vm.id,
-              title: vm.title,
+              id: r.id,
+              title: r.name,
             },
             geometry: {
               type: 'Point',
-              coordinates: [vm.point?.lng || 0, vm.point?.lat || 0],
+              coordinates: [r.lng || 0, r.lat || 0],
             },
           });
         });
@@ -392,8 +394,8 @@ export class PlacePickerComponent implements OnInit {
     // fit to markers bounds
     if (this.page) {
       const pagePoints: LngLat[] = this.page.items
-        .filter((vm) => vm.point)
-        .map((vm) => vm.point) as LngLat[];
+        .filter((r) => r.lat)
+        .map((r) => new LngLat(r.lng!, r.lat!)) as LngLat[];
       const bounds = this.getRectBounds(pagePoints);
       if (bounds) {
         this._map?.fitBounds(bounds);
@@ -499,7 +501,7 @@ export class PlacePickerComponent implements OnInit {
   }
   //#endregion
 
-  public onPlacePick(event: PickedPlace): void {
+  public onPlacePick(event: QuickSearchResult): void {
     this.placePick.emit(event);
   }
 

@@ -324,19 +324,20 @@
           </td>
           <td fxHide.lt-md>{{ item.id }}</td>
           <td>
-            <a
-              [href]="'https://pleiades.stoa.org/places/' + item.id"
-              target="_blank"
-              >{{ item.title }}</a
-            >
-          </td>
-          <td>
-            <a *ngIf="item.typeUri" [href]="item.typeUri" target="_blank">{{
-              item.typeLabel
+            <a [href]="item.uriPrefix + item.id" target="_blank">{{
+              item.name
             }}</a>
           </td>
-          <td fxHide.lt-md>{{ item.point?.lng }}</td>
-          <td fxHide.lt-md>{{ item.point?.lat }}</td>
+          <td>
+            <a
+              *ngIf="item.payload?.typeUri"
+              [href]="item.payload?.typeUri"
+              target="_blank"
+              >{{ item.type }}</a
+            >
+          </td>
+          <td fxHide.lt-md>{{ item.lng }}</td>
+          <td fxHide.lt-md>{{ item.lat }}</td>
         </tr>
       </tbody>
     </table>
