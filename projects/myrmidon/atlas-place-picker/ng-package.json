@@ -2,15 +2,6 @@
   "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../../dist/myrmidon/atlas-place-picker",
   "lib": {
-    "entryFile": "src/public-api.ts",
-    "umdModuleIds": {
-      "ngx-mapbox-gl": "ngx-mapbox-gl",
-      "mapbox-gl": "mapbox-gl",
-      "@mapbox/mapbox-gl-draw": "@mapbox/mapbox-gl-draw",
-      "mapbox-gl-draw-rectangle-restrict-area": "mapbox-gl-draw-rectangle-restrict-area",
-      "@myrmidon/cadmus-material": "@myrmidon/cadmus-material",
-      "@myrmidon/ng-tools": "@myrmidon/ng-tools",
-      "@myrmidon/cadmus-ui-flags-picker": "@myrmidon/cadmus-ui-flags-picker"
-    }
+    "entryFile": "src/public-api.ts"
   }
 }
