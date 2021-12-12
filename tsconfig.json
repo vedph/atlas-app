@@ -3,6 +3,10 @@
   "compileOnSave": false,
   "compilerOptions": {
     "paths": {
+      "@myrmidon/atlas-place-lookup": [
+        "dist/myrmidon/atlas-place-lookup/myrmidon-atlas-place-lookup",
+        "dist/myrmidon/atlas-place-lookup"
+      ],
       "@myrmidon/atlas-place-picker": [
         "dist/myrmidon/atlas-place-picker/myrmidon-atlas-place-picker",
         "dist/myrmidon/atlas-place-picker"

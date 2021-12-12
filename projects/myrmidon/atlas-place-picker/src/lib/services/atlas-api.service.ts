@@ -3,23 +3,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 
-import { EnvService, ErrorService } from '@myrmidon/ng-tools';
-
-/**
- * A page of data.
- */
-export interface DataPage<T> {
-  pageNumber: number;
-  pageSize: number;
-  pageCount: number;
-  total: number;
-  items: T[];
-}
+import { DataPage, EnvService, ErrorService } from '@myrmidon/ng-tools';
 
 /**
  * A lookup data entry.
  */
-export interface Lookup {
+export interface LookupEntry {
   id: number;
   group?: string;
   fullName: string;
@@ -72,7 +61,7 @@ export class AtlasApiService {
     private _env: EnvService
   ) {}
 
-  public getLookup(filter: LookupFilter): Observable<DataPage<Lookup>> {
+  public getLookup(filter: LookupFilter): Observable<DataPage<LookupEntry>> {
     let p = new HttpParams();
     p = p.set('pageNumber', filter.pageNumber.toString());
     p = p.set('pageSize', filter.pageSize.toString());
@@ -90,7 +79,7 @@ export class AtlasApiService {
     const url = `${this._env.get('apiUrl')}lookup`;
 
     return this._http
-      .get<DataPage<Lookup>>(url, {
+      .get<DataPage<LookupEntry>>(url, {
         params: p,
       })
       .pipe(retry(3), catchError(this._error.handleError));
@@ -99,8 +88,66 @@ export class AtlasApiService {
   public quickSearch(filter: QuickSearchFilter): Observable<DataPage<any>> {
     const url = `${this._env.get('apiUrl')}qsearch`;
 
+    let p = new HttpParams();
+    p = p.set('pageNumber', filter.pageNumber.toString());
+    p = p.set('pageSize', filter.pageSize.toString());
+
+    if (filter.distanceMin) {
+      p = p.set('distanceMin', filter.distanceMin.toString());
+    }
+    if (filter.distanceMax) {
+      p = p.set('distanceMax', filter.distanceMax.toString());
+    }
+    if (filter.distanceLon) {
+      p = p.set('distanceLon', filter.distanceLon.toString());
+    }
+    if (filter.distanceLat) {
+      p = p.set('distanceLat', filter.distanceLat.toString());
+    }
+    if (filter.swCornerLon) {
+      p = p.set('swCornerLon', filter.swCornerLon.toString());
+    }
+    if (filter.swCornerLat) {
+      p = p.set('swCornerLat', filter.swCornerLat.toString());
+    }
+    if (filter.neCornerLon) {
+      p = p.set('neCornerLon', filter.neCornerLon.toString());
+    }
+    if (filter.neCornerLat) {
+      p = p.set('neCornerLat', filter.neCornerLat.toString());
+    }
+    if (filter.containedInBox) {
+      p = p.set('containedInBox', 'true');
+    }
+    if (filter.text) {
+      p = p.set('text', filter.text);
+    }
+    if (filter.matchAny) {
+      p = p.set('matchAny', 'true');
+    }
+    if (filter.placeType) {
+      p = p.set('placeType', filter.placeType);
+    }
+    if (filter.rankMin) {
+      p = p.set('rankMin', filter.rankMin.toString());
+    }
+    if (filter.rankMax) {
+      p = p.set('rankMax', filter.rankMax.toString());
+    }
+    if (filter.yearMin) {
+      p = p.set('yearMin', filter.yearMin.toString());
+    }
+    if (filter.yearMax) {
+      p = p.set('yearMax', filter.yearMax.toString());
+    }
+    if (filter.scopes) {
+      p = p.set('scopes', filter.scopes);
+    }
+
     return this._http
-      .post<DataPage<Lookup>>(url, filter)
+      .get<DataPage<LookupEntry>>(url, {
+        params: p,
+      })
       .pipe(retry(3), catchError(this._error.handleError));
   }
 }

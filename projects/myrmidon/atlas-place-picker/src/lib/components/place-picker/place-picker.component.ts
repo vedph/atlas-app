@@ -19,8 +19,7 @@ import {
 import { take } from 'rxjs/operators';
 import {
   AtlasApiService,
-  DataPage,
-  Lookup,
+  LookupEntry,
   QuickSearchFilter,
 } from '../../services/atlas-api.service';
 // https://www.npmjs.com/package/mapbox-gl-draw-rectangle-restrict-area
@@ -29,6 +28,7 @@ import DrawRectangle, {
   DrawStyles,
 } from 'mapbox-gl-draw-rectangle-restrict-area';
 import { Flag } from '@myrmidon/cadmus-ui-flags-picker';
+import { DataPage } from '@myrmidon/ng-tools';
 
 /**
  * A place picked in the PlacePickerComponent.
@@ -79,7 +79,7 @@ export class PlacePickerComponent implements OnInit {
   public form: FormGroup;
 
   public currentYear: number;
-  public types?: Lookup[];
+  public types?: LookupEntry[];
   public availScopes: Flag[];
   public limits: number[];
 

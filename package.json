@@ -24,6 +24,7 @@
     "@angular/router": "~13.1.0",
     "@mapbox/mapbox-gl-draw": "^1.3.0",
     "@myrmidon/cadmus-material": "0.1.0",
+    "@myrmidon/cadmus-refs-lookup": "0.0.1",
     "@myrmidon/cadmus-ui-flags-picker": "0.0.2",
     "@myrmidon/ng-tools": "0.0.3",
     "mapbox-gl": "^2.6.1",
