@@ -1,0 +1,10 @@
+<div>
+  <cadmus-ref-lookup
+    label="place"
+    [service]="service"
+    [item]="item"
+    [hasMore]="true"
+    (itemChange)="onItemChange($event)"
+    (moreRequest)="onMoreRequest()"
+  ></cadmus-ref-lookup>
+</div>

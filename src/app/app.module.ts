@@ -6,7 +6,6 @@ import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CadmusMaterialModule } from '@myrmidon/cadmus-material';
-import { RouterModule } from '@angular/router';
 import { EnvServiceProvider } from '@myrmidon/ng-tools';
 import { CadmusRefsLookupModule } from '@myrmidon/cadmus-refs-lookup';
 
@@ -15,26 +14,19 @@ import { AppComponent } from './app.component';
 import { AtlasPlacePickerModule } from 'projects/myrmidon/atlas-place-picker/src/public-api';
 import { HomeComponent } from './components/home/home.component';
 import { environment } from 'src/environments/environment';
+import { PlacePickerPgComponent } from './components/place-picker-pg/place-picker-pg.component';
+import { PlaceLookupPgComponent } from './components/place-lookup-pg/place-lookup-pg.component';
+import { AtlasPlaceLookupModule } from 'projects/myrmidon/atlas-place-lookup/src/public-api';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent],
+  declarations: [AppComponent, HomeComponent, PlacePickerPgComponent, PlaceLookupPgComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgxMapboxGLModule,
     AtlasPlacePickerModule.forRoot({ mapboxToken: environment.mapboxToken }),
+    AtlasPlaceLookupModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(
-      [
-        { path: '', redirectTo: 'home', pathMatch: 'full' },
-        { path: 'home', component: HomeComponent },
-      ],
-      // {
-      //   initialNavigation: 'enabled',
-      //   useHash: true,
-      //   relativeLinkResolution: 'legacy',
-      // }
-    ),
     // material
     FlexLayoutModule,
     CadmusMaterialModule,

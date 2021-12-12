@@ -8,8 +8,10 @@ import { CadmusMaterialModule } from '@myrmidon/cadmus-material';
 import { AtlasPlacePickerModule } from '@myrmidon/atlas-place-picker';
 import { CadmusRefsLookupModule } from '@myrmidon/cadmus-refs-lookup';
 
+import { AtlasLookupComponent } from './components/atlas-lookup/atlas-lookup.component';
+
 @NgModule({
-  declarations: [],
+  declarations: [AtlasLookupComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -20,6 +22,6 @@ import { CadmusRefsLookupModule } from '@myrmidon/cadmus-refs-lookup';
     CadmusRefsLookupModule,
     AtlasPlacePickerModule,
   ],
-  exports: [],
+  exports: [AtlasLookupComponent],
 })
 export class AtlasPlaceLookupModule {}
