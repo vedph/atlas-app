@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AtlasLookupComponent } from './atlas-lookup.component';
+import { PlacePickerDialogComponent } from './place-picker-dialog.component';
 
-describe('AtlasLookupComponent', () => {
-  let component: AtlasLookupComponent;
-  let fixture: ComponentFixture<AtlasLookupComponent>;
+describe('PlacePickerDialogComponent', () => {
+  let component: PlacePickerDialogComponent;
+  let fixture: ComponentFixture<PlacePickerDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AtlasLookupComponent ]
+      declarations: [ PlacePickerDialogComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AtlasLookupComponent);
+    fixture = TestBed.createComponent(PlacePickerDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

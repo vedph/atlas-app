@@ -1,20 +1,30 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { QuickSearchResult } from '@myrmidon/atlas-place-picker';
+
 import { AtlasRefLookupService } from '../../services/atlas-ref-lookup.service';
+import { PlacePickerDialogComponent } from '../place-picker-dialog/place-picker-dialog.component';
 
 @Component({
   selector: 'atlas-lookup',
-  templateUrl: './atlas-lookup.component.html',
-  styleUrls: ['./atlas-lookup.component.css'],
+  templateUrl: './lookup.component.html',
+  styleUrls: ['./lookup.component.css'],
 })
-export class AtlasLookupComponent implements OnInit {
+export class LookupComponent implements OnInit {
   @Input()
   public item: QuickSearchResult | undefined;
 
   @Output()
   public itemChange: EventEmitter<QuickSearchResult>;
 
-  constructor(public service: AtlasRefLookupService) {
+  constructor(
+    public service: AtlasRefLookupService,
+    private _dialog: MatDialog
+  ) {
     this.itemChange = new EventEmitter<QuickSearchResult>();
   }
 
@@ -26,6 +36,13 @@ export class AtlasLookupComponent implements OnInit {
   }
 
   public onMoreRequest(): void {
-    // TODO
+    this._dialog
+      .open(PlacePickerDialogComponent)
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.item = result;
+        }
+      });
   }
 }
