@@ -4,6 +4,7 @@
     [service]="service"
     [item]="item"
     [hasMore]="true"
+    linkTemplate="https://pleiades.stoa.org/places/{id}"
     (itemChange)="onItemChange($event)"
     (moreRequest)="onMoreRequest()"
   ></cadmus-ref-lookup>
