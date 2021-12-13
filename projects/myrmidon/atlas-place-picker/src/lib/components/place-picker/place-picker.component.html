@@ -20,16 +20,16 @@
 
       <!-- match all -->
       &nbsp;
-      <mat-checkbox [formControl]="matchAny">match any</mat-checkbox>
+      <mat-checkbox [formControl]="matchAny">any</mat-checkbox>
       &nbsp;
       <button
+        color="warn"
         type="button"
-        mat-flat-button
+        mat-icon-button
         matTooltip="Close this picker"
         (click)="onPickerClose()"
       >
         <mat-icon>cancel</mat-icon>
-        close
       </button>
     </div>
 
@@ -280,6 +280,7 @@
       [center]="[23.7275, 37.9838]"
       (mapLoad)="onMapLoad($event)"
       (mapClick)="onMapClick($event)"
+      (render)="onRender($event)"
     >
       <mgl-marker
         id="result-pin-layer"

@@ -54,6 +54,7 @@ export interface PickedPlace {
 export class PlacePickerComponent implements OnInit {
   private _map?: Map;
   private _rectDraw?: MapboxDraw;
+  private _rendered?: boolean;
 
   public text: FormControl;
   public matchAny: FormControl;
@@ -497,6 +498,15 @@ export class PlacePickerComponent implements OnInit {
         break;
       case 2: // box
         break;
+    }
+  }
+
+  public onRender(event): void {
+    // resize to fit container
+    // https://github.com/Wykks/ngx-mapbox-gl/issues/344
+    if (!this._rendered) {
+      event.target.resize();
+      this._rendered = true;
     }
   }
   //#endregion
