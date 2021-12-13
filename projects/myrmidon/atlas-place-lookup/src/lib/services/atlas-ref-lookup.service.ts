@@ -23,7 +23,8 @@ export class AtlasRefLookupService implements RefLookupService {
       .quickSearch({
         pageNumber: 1,
         pageSize: filter.limit,
-        text: filter.text,
+        text: '*=' + filter.text,
+        scopes: 'plttl'
       })
       .pipe(map((r) => r.items as unknown[] as T[]));
   }
