@@ -18,7 +18,7 @@ import {
 export class AtlasRefLookupService implements RefLookupService {
   constructor(private _apiService: AtlasApiService) {}
 
-  lookup<T>(filter: RefLookupFilter): Observable<T[]> {
+  lookup(filter: RefLookupFilter): Observable<any[]> {
     return this._apiService
       .quickSearch({
         pageNumber: 1,
@@ -26,7 +26,7 @@ export class AtlasRefLookupService implements RefLookupService {
         text: '*=' + filter.text,
         scopes: 'plttl'
       })
-      .pipe(map((r) => r.items as unknown[] as T[]));
+      .pipe(map((r) => r.items));
   }
 
   getName(item: any): string {
