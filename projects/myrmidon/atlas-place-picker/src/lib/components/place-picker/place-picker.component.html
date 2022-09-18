@@ -49,10 +49,10 @@
     <fieldset>
       <legend>scopes</legend>
       <cadmus-ui-flags-picker
-        [selectedIds]="scopes?.value"
+        [selectedIds]="scopes.value"
         [flags]="availScopes"
         [toolbar]="true"
-        (selectionChange)="onScopeChange($event)"
+        (selectionChange)="onScopeChange($any($event))"
       ></cadmus-ui-flags-picker>
     </fieldset>
 
@@ -347,8 +347,8 @@
       gdArea="pagination"
       gdAlignColumns="center"
       gdAlignRows="start"
-      [length]="page?.total"
-      [pageSize]="limit?.value"
+      [length]="page.total"
+      [pageSize]="limit.value"
       [pageSizeOptions]="[20, 50, 75, 100]"
       [pageIndex]="currentPage ? currentPage - 1 : 0"
       [showFirstLastButtons]="true"

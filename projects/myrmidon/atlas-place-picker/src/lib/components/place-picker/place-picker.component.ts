@@ -1,8 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
@@ -56,29 +56,29 @@ export class PlacePickerComponent implements OnInit {
   private _rectDraw?: MapboxDraw;
   private _rendered?: boolean;
 
-  public text: FormControl;
-  public matchAny: FormControl;
-  public type: FormControl;
-  public scopes: FormControl;
-  public yearMin: FormControl;
-  public yearMax: FormControl;
-  public rank: FormControl;
+  public text: UntypedFormControl;
+  public matchAny: UntypedFormControl;
+  public type: UntypedFormControl;
+  public scopes: UntypedFormControl;
+  public yearMin: UntypedFormControl;
+  public yearMax: UntypedFormControl;
+  public rank: UntypedFormControl;
 
-  public hasPoint: FormControl;
-  public distLng: FormControl;
-  public distLat: FormControl;
-  public distMin: FormControl;
-  public distMax: FormControl;
+  public hasPoint: UntypedFormControl;
+  public distLng: UntypedFormControl;
+  public distLat: UntypedFormControl;
+  public distMin: UntypedFormControl;
+  public distMax: UntypedFormControl;
 
-  public hasBox: FormControl;
-  public boxSwLng: FormControl;
-  public boxSwLat: FormControl;
-  public boxNeLng: FormControl;
-  public boxNeLat: FormControl;
-  public boxContained: FormControl;
+  public hasBox: UntypedFormControl;
+  public boxSwLng: UntypedFormControl;
+  public boxSwLat: UntypedFormControl;
+  public boxNeLng: UntypedFormControl;
+  public boxNeLat: UntypedFormControl;
+  public boxContained: UntypedFormControl;
 
-  public limit: FormControl;
-  public form: FormGroup;
+  public limit: UntypedFormControl;
+  public form: UntypedFormGroup;
 
   public currentYear: number;
   public types?: LookupEntry[];
@@ -91,7 +91,7 @@ export class PlacePickerComponent implements OnInit {
   public resultSource?: GeoJSON.FeatureCollection<GeoJSON.Point>;
   public rawResultSource?: GeoJSONSourceRaw;
   public labelLayout?: AnyLayout;
-  public drawing: FormControl;
+  public drawing: UntypedFormControl;
   public marker?: Marker;
   public boxId?: string;
 
@@ -107,7 +107,7 @@ export class PlacePickerComponent implements OnInit {
   @Output()
   public pickerClose: EventEmitter<any>;
 
-  constructor(formBuilder: FormBuilder, private _apiService: AtlasApiService) {
+  constructor(formBuilder: UntypedFormBuilder, private _apiService: AtlasApiService) {
     this.placePick = new EventEmitter<QuickSearchResult>();
     this.pickerClose = new EventEmitter<any>();
     this.currentYear = new Date().getFullYear();

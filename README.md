@@ -15,3 +15,7 @@ Quick Docker image build:
 - [Official Documentation](https://docs.mapbox.com/)
 - [ngx-mapbox-gl](https://github.com/Wykks/ngx-mapbox-gl)
 - [Using MapBox in Angular](https://medium.com/@timo.baehr/using-mapbox-in-angular-application-bc3b2b38592)
+
+## History
+
+- 2022-09-18: updated Angular and packages. Note: temporarily added any to `(selectionChange)="onScopeChange($any($event))"`. TODO: resolve issue.
